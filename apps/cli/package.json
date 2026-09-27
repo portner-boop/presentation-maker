@@ -1,0 +1,44 @@
+{
+  "name": "@pm/cli",
+  "version": "0.0.0",
+  "private": true,
+  "description": "CLI presentation-maker: шаблоны и генерация презентаций",
+  "type": "module",
+  "bin": {
+    "pm": "./bin/run.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "oclif.manifest.json"
+  ],
+  "oclif": {
+    "bin": "pm",
+    "dirname": "presentation-maker",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help"
+    ],
+    "topicSeparator": " ",
+    "topics": {
+      "templates": {
+        "description": "Брендовые шаблоны: загрузка и статус обучения"
+      },
+      "presentations": {
+        "description": "Генерация презентаций и текста спикера"
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@oclif/core": "^5.1.2",
+    "@oclif/plugin-help": "^7.0.2",
+    "@pm/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.23.15"
+  }
+}

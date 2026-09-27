@@ -1,0 +1,21 @@
+node_modules/
+dist/
+*.tsbuildinfo
+oclif.manifest.json
+
+.env
+.env.*
+!.env.example
+
+# prisma client генерится при сборке
+apps/api/src/generated/
+
+# загруженные шаблоны и сгенерированные презентации
+/apps/api/storage/
+
+.DS_Store
+*.log
+coverage/
+.idea/
+.vscode/*
+!.vscode/extensions.json

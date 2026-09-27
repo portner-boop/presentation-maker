@@ -1,0 +1,11 @@
+packages:
+  - apps/*
+  - packages/*
+
+# pnpm 12 по умолчанию блокирует postinstall-скрипты зависимостей
+allowBuilds:
+  '@prisma/engines': true
+  '@scarf/scarf': false # телеметрия swagger-ui
+  esbuild: true # tsx для dev-режима cli
+  msgpackr-extract: true # нативное ускорение msgpack для bullmq
+  prisma: true

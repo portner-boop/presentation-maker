@@ -1,0 +1,63 @@
+.drop {
+  margin-bottom: var(--space-12);
+  padding: 0;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-xl);
+  background: var(--background);
+  transition:
+    border-color var(--dur-micro) var(--ease-out),
+    background-color var(--dur-micro) var(--ease-out);
+}
+
+.drop:hover {
+  background: var(--surface-2);
+}
+
+.drop[data-accept] {
+  border-color: var(--brand-accent-ink);
+  background: var(--brand-accent-soft);
+}
+
+.drop[data-reject] {
+  border-color: var(--error);
+  background: var(--error-soft);
+}
+
+.dropInner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-8);
+}
+
+.dropIcon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background: var(--brand-accent-soft);
+  color: var(--brand-accent-ink);
+}
+
+.dropTitle {
+  display: block;
+  font-size: var(--text-lead);
+  font-weight: 600;
+}
+
+.dropHint {
+  display: block;
+  margin-top: var(--space-1);
+  max-width: 70ch;
+  font-size: var(--text-label);
+  color: var(--muted-text);
+}
+
+@media (max-width: 36em) {
+  .dropInner {
+    align-items: flex-start;
+    padding: var(--space-5);
+  }
+}

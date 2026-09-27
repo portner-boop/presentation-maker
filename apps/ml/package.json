@@ -1,0 +1,33 @@
+{
+  "name": "@pm/ml",
+  "version": "0.0.0",
+  "private": true,
+  "description": "ИИ-библиотека: анализ шаблона и генерация презентации. Подключается к api",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@pm/shared": "workspace:*",
+    "@xmldom/xmldom": "^0.9.12",
+    "jszip": "^3.10.2",
+    "openai": "^7.23.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "pptxgenjs": "^4.0.1",
+    "vitest": "^5.0.2"
+  }
+}

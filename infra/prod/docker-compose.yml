@@ -1,0 +1,118 @@
+# Прод: postgres + redis + миграции + api + worker + web.
+# Запуск из корня: docker compose -f infra/prod/docker-compose.yml --env-file infra/prod/.env up -d --build
+name: presentation-maker
+
+x-app-env: &app-env
+  NODE_ENV: production
+  DATABASE_URL: postgresql://${POSTGRES_USER:-pm}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}@postgres:5432/${POSTGRES_DB:-presentation_maker}
+  REDIS_URL: redis://redis:6379
+  STORAGE_DIR: /app/storage
+
+x-app-build: &app-build
+  context: ../..
+  dockerfile: infra/prod/api.Dockerfile
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-pm}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+      POSTGRES_DB: ${POSTGRES_DB:-presentation_maker}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # очередь BullMQ + кеш. BullMQ требует maxmemory-policy noeviction
+  redis:
+    image: redis:7.4-alpine
+    restart: unless-stopped
+    command: ['redis-server', '--appendonly', 'yes', '--maxmemory-policy', 'noeviction']
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  migrate:
+    build:
+      <<: *app-build
+      target: build
+    working_dir: /repo/apps/api
+    command: ['pnpm', 'db:deploy']
+    environment: *app-env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: 'no'
+
+  api:
+    build:
+      <<: *app-build
+      target: runtime
+    image: presentation-maker-api
+    restart: unless-stopped
+    environment:
+      <<: *app-env
+      APP_ROLE: api
+      PORT: 3000
+    ports:
+      - '${API_PORT:-3000}:3000'
+    volumes:
+      - storage:/app/storage
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+
+  # потребители очередей: обучение на шаблоне, генерация (GENERATION_CONCURRENCY параллельно),
+  # клонирование репозиториев и превью слайдов — поэтому отдельная цель образа с git и LibreOffice
+  worker:
+    build:
+      <<: *app-build
+      target: worker
+    image: presentation-maker-worker
+    restart: unless-stopped
+    environment:
+      <<: *app-env
+      APP_ROLE: worker
+      TEMPLATE_ANALYSIS_CONCURRENCY: ${TEMPLATE_ANALYSIS_CONCURRENCY:-1}
+      GENERATION_CONCURRENCY: ${GENERATION_CONCURRENCY:-3}
+      LLM_BASE_URL: ${LLM_BASE_URL:?LLM_BASE_URL is required}
+      LLM_API_KEY: ${LLM_API_KEY:?LLM_API_KEY is required}
+      LLM_MODEL: ${LLM_MODEL:?LLM_MODEL is required}
+      LLM_MAX_CONCURRENCY: ${LLM_MAX_CONCURRENCY:-12}
+      LLM_STRUCTURED_OUTPUT: ${LLM_STRUCTURED_OUTPUT:-json_schema}
+    volumes:
+      - storage:/app/storage
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+
+  # интерфейс: статика Vite в nginx, /api проксируется в api
+  web:
+    build:
+      context: ../..
+      dockerfile: infra/prod/web.Dockerfile
+    image: presentation-maker-web
+    restart: unless-stopped
+    ports:
+      - '${WEB_PORT:-8080}:80'
+    depends_on:
+      - api
+
+volumes:
+  postgres-data:
+  redis-data:
+  # TODO: S3/MinIO вместо общего volume, чтобы api и worker можно было разнести по машинам
+  storage:

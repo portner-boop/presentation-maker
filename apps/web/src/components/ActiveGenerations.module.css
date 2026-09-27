@@ -1,0 +1,87 @@
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.list[data-compact] {
+  grid-template-columns: 1fr;
+}
+
+/* внутренние линии сетки вместо отдельных карточек */
+.list > li {
+  min-width: 0;
+  box-shadow:
+    1px 0 0 var(--border),
+    0 1px 0 var(--border);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color var(--dur-micro) var(--ease-out);
+}
+
+.item:hover {
+  background: var(--surface-2);
+}
+
+.item:focus-visible {
+  outline: 2px solid var(--brand-accent-ink);
+  outline-offset: -2px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+}
+
+.name {
+  min-width: 0;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.time {
+  flex-shrink: 0;
+  font-size: var(--text-label);
+  font-weight: 600;
+}
+
+.budget {
+  color: var(--muted-text);
+  font-weight: 500;
+}
+
+.track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.bar {
+  display: block;
+  height: 100%;
+  background: var(--brand-lime);
+  transform-origin: left;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.stage {
+  font-size: var(--text-label);
+  color: var(--muted-text);
+}

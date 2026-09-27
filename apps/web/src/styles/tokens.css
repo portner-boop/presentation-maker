@@ -1,0 +1,76 @@
+/* Токены брендбука (Agent UI Brand System) + то, что понадобилось продукту поверх него. */
+:root {
+  /* Brand */
+  --brand-lime: #00e564;
+  --brand-dark: #00281f;
+
+  /* Supporting */
+  --brand-accent-ink: #0a7a38;
+  --brand-accent-soft: #e0f7e9;
+  --brand-deep-green: #084d2a;
+
+  /* Neutral */
+  --background: #ffffff;
+  --foreground: #00281f;
+  --border: #e5eae7;
+  --border-strong: #cdd6d1;
+  --muted: #7a8c84; /* иконки и крупные метки: на белом только 3.5:1 */
+  --muted-text: #5b6b64; /* вторичный текст, 5.6:1 */
+  --surface-2: #f6f8f7;
+
+  /* Sidebar (dark surface) */
+  --nav-text: rgb(255 255 255 / 0.68);
+  --nav-text-active: #ffffff;
+  --nav-hover: rgb(255 255 255 / 0.06);
+  --nav-divider: rgb(255 255 255 / 0.1);
+
+  /* Semantic: только там, где цвет несёт системный смысл */
+  --success: #0a7a38;
+  --warning: #b45309;
+  --warning-soft: #fdf3e7;
+  --error: #c62828;
+  --error-soft: #fdecec;
+  --info: #1d4ed8;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* Spacing (шаг 4px) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Type */
+  --font-sans:
+    'Plus Jakarta Sans Variable', 'Manrope Variable', ui-sans-serif, system-ui, sans-serif;
+  --text-meta: 12px;
+  --text-label: 13px;
+  --text-body: 14px;
+  --text-lead: 16px;
+  --text-section: 20px;
+  --text-page: 30px;
+  --text-display: 38px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+  --dur-micro: 150ms;
+  --dur-base: 220ms;
+
+  /* Layers */
+  --z-sticky: 10;
+  --z-overlay: 100;
+  --z-toast: 200;
+
+  --sidebar-width: 248px;
+  --focus-ring: 0 0 0 2px var(--background), 0 0 0 4px var(--brand-accent-ink);
+}

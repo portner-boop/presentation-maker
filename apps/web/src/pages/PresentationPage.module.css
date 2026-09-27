@@ -1,0 +1,508 @@
+.metaLink {
+  color: var(--brand-accent-ink);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.metaLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ─── Прогресс ─── */
+
+.progress {
+  max-width: 880px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-8);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+}
+
+.progressHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-6);
+}
+
+.progressStage {
+  margin: 0;
+  font-size: var(--text-section);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.progressHint {
+  margin: var(--space-1) 0 0;
+  color: var(--muted-text);
+  font-size: var(--text-label);
+}
+
+.progressTime {
+  margin: 0;
+  font-size: var(--text-section);
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.progressTime span {
+  font-size: var(--text-body);
+  font-weight: 500;
+  color: var(--muted-text);
+}
+
+.track {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.track span {
+  display: block;
+  height: 100%;
+  background: var(--brand-lime);
+  transform-origin: left;
+  transition: transform 400ms var(--ease-out);
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: var(--space-4);
+}
+
+.steps li {
+  display: flex;
+  gap: var(--space-3);
+  color: var(--muted-text);
+}
+
+.steps li[data-state='current'],
+.steps li[data-state='done'] {
+  color: var(--foreground);
+}
+
+.stepMark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  font-size: var(--text-meta);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  transition:
+    background-color var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out);
+}
+
+[data-state='current'] .stepMark {
+  border-color: var(--brand-lime);
+  background: var(--brand-lime);
+  color: var(--brand-dark);
+}
+
+[data-state='done'] .stepMark {
+  border-color: var(--brand-dark);
+  background: var(--brand-dark);
+  color: var(--background);
+}
+
+.stepLabel {
+  display: block;
+  font-weight: 600;
+  font-size: var(--text-body);
+}
+
+.stepDetail {
+  display: block;
+  font-size: var(--text-label);
+  color: var(--muted-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.brief {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-4);
+}
+
+.brief summary {
+  cursor: pointer;
+  font-size: var(--text-label);
+  font-weight: 600;
+  color: var(--muted-text);
+  width: fit-content;
+  border-radius: 4px;
+}
+
+.brief p {
+  margin: var(--space-3) 0 0;
+  white-space: pre-wrap;
+  max-width: 72ch;
+}
+
+/* ─── Готово ─── */
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.toolbarMeta {
+  font-size: var(--text-label);
+  color: var(--muted-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.speaker {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
+  grid-template-areas:
+    'stage notes'
+    'rail rail';
+  gap: var(--space-6);
+  align-items: start;
+}
+
+/* По умолчанию лента — горизонтальная плёнка под слайдом; на широких экранах — колонка слева */
+.rail {
+  grid-area: rail;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2);
+}
+
+.rail ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+}
+
+.rail li {
+  flex: 0 0 180px;
+  scroll-snap-align: start;
+}
+
+.railItem {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--dur-micro) var(--ease-out);
+}
+
+.railItem:hover {
+  background: var(--surface-2);
+}
+
+.railItem[aria-current='true'] {
+  background: var(--brand-accent-soft);
+}
+
+.railItem[aria-current='true'] .railNumber {
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
+  color: var(--background);
+}
+
+.railItem:focus-visible {
+  outline: 2px solid var(--brand-accent-ink);
+  outline-offset: -2px;
+}
+
+.railThumb {
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.railThumb .railNumber {
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  width: 20px;
+  height: 20px;
+  font-size: 11px;
+}
+
+.railNumber {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  font-size: var(--text-meta);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  background: var(--background);
+}
+
+.railText {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.railTitle {
+  font-size: var(--text-label);
+  font-weight: 600;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.railMeta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-meta);
+  color: var(--muted-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.railMeta svg {
+  color: var(--warning);
+}
+
+.stage {
+  grid-area: stage;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.stageNav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.counter {
+  min-width: 64px;
+  text-align: center;
+  font-size: var(--text-label);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.notes {
+  grid-area: notes;
+  position: sticky;
+  top: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-6) var(--space-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.notesHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.notesTitle {
+  margin: 0;
+  flex: 1;
+  font-size: var(--text-lead);
+  font-weight: 600;
+}
+
+.timing {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 var(--space-2);
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: var(--text-meta);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.notesText {
+  margin: 0;
+  font-size: var(--text-lead);
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+.warnings {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--warning-soft);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: var(--text-label);
+  color: var(--warning);
+}
+
+.warnings li {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.warnings svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* ─── Весь текст ─── */
+
+.script {
+  max-width: 760px;
+}
+
+.scriptActions {
+  margin-bottom: var(--space-6);
+}
+
+.scriptList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.scriptItem {
+  padding: var(--space-6) 0;
+  border-top: 1px solid var(--border);
+}
+
+.scriptHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.scriptTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: var(--text-lead);
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+
+.scriptTitle:hover {
+  color: var(--brand-accent-ink);
+}
+
+.scriptText {
+  margin: 0;
+  font-size: var(--text-lead);
+  line-height: 1.7;
+  max-width: 68ch;
+  white-space: pre-wrap;
+}
+
+@media (min-width: 100em) {
+  .speaker {
+    grid-template-columns: 272px minmax(0, 1fr) minmax(320px, 380px);
+    grid-template-areas: 'rail stage notes';
+  }
+
+  .rail {
+    position: sticky;
+    top: var(--space-6);
+    max-height: calc(100dvh - var(--space-12));
+    overflow-y: auto;
+  }
+
+  .rail ol {
+    flex-direction: column;
+    overflow-x: visible;
+    gap: 2px;
+  }
+
+  .rail li {
+    flex: none;
+  }
+
+  .railItem {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .railThumb {
+    width: 88px;
+  }
+}
+
+@media (max-width: 62em) {
+  .speaker {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'stage'
+      'notes'
+      'rail';
+  }
+
+  .notes {
+    position: static;
+  }
+
+  .rail li {
+    flex-basis: 150px;
+  }
+
+  .progress {
+    padding: var(--space-6);
+  }
+
+  .progressHead {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+}

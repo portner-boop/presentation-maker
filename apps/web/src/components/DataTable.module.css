@@ -1,0 +1,102 @@
+/* Таблица — first-class компонент брендбука: белый фон, тонкие линии, спокойный hover. */
+.wrap {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-body);
+}
+
+.table th {
+  height: 44px;
+  padding: 0 var(--space-4);
+  text-align: left;
+  font-size: var(--text-meta);
+  font-weight: 600;
+  color: var(--muted-text);
+  white-space: nowrap;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.table td {
+  height: 64px;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.table tbody tr {
+  transition: background-color var(--dur-micro) var(--ease-out);
+}
+
+.table tbody tr[data-href] {
+  cursor: pointer;
+}
+
+.table tbody tr:hover {
+  background: var(--surface-2);
+}
+
+.numeric {
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.primaryCell {
+  min-width: 260px;
+}
+
+.primaryLink {
+  display: block;
+  color: var(--foreground);
+  font-weight: 600;
+  text-decoration: none;
+  max-width: 52ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: 4px;
+}
+
+.primaryLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.secondary {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--text-meta);
+  color: var(--muted-text);
+  max-width: 52ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.muted {
+  color: var(--muted-text);
+  white-space: nowrap;
+}
+
+.actions {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+}
+
+@media (max-width: 48em) {
+  .hideSm {
+    display: none;
+  }
+}

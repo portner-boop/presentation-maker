@@ -1,0 +1,20 @@
+.mark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--nav-text-active);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+}
+
+.mark:focus-visible {
+  outline: 2px solid var(--brand-lime);
+  outline-offset: 4px;
+}
+
+.name {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}

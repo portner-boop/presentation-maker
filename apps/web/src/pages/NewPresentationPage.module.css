@@ -1,0 +1,157 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 720px) minmax(260px, 340px);
+  gap: var(--space-12);
+  align-items: start;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+.group {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.group + .group {
+  padding-top: var(--space-10);
+  border-top: 1px solid var(--border);
+}
+
+.legend {
+  /* float выводит legend из рамки fieldset: иначе разделитель проходит сквозь заголовок */
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin-bottom: var(--space-1);
+  font-size: var(--text-section);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.legend + * {
+  clear: both;
+}
+
+.optional {
+  margin-left: var(--space-2);
+  font-size: var(--text-label);
+  font-weight: 500;
+  color: var(--muted-text);
+}
+
+.groupHint {
+  margin: calc(var(--space-3) * -1) 0 0;
+  color: var(--muted-text);
+  max-width: 64ch;
+}
+
+.counter {
+  margin: calc(var(--space-4) * -1) 0 0;
+  align-self: flex-end;
+  font-size: var(--text-meta);
+  color: var(--muted-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.label {
+  font-size: var(--text-body);
+  font-weight: 500;
+}
+
+.fieldHint {
+  font-size: var(--text-label);
+  color: var(--muted-text);
+  margin-bottom: var(--space-2);
+}
+
+.segmented {
+  align-self: flex-start;
+}
+
+.submit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border);
+}
+
+.aside {
+  position: sticky;
+  top: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.asideTitle {
+  margin: 0;
+  font-size: var(--text-label);
+  font-weight: 600;
+  color: var(--muted-text);
+}
+
+.asideEmpty {
+  margin: 0;
+  padding: var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-label);
+  color: var(--muted-text);
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.optionName {
+  font-weight: 600;
+}
+
+.optionMeta {
+  font-size: var(--text-meta);
+  color: var(--muted-text);
+}
+
+@media (max-width: 75em) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-10);
+  }
+
+  .aside {
+    position: static;
+    order: -1;
+  }
+
+  .aside:has(> p) {
+    display: none;
+  }
+}
+
+@media (max-width: 36em) {
+  .segmented {
+    align-self: stretch;
+  }
+
+  .submit > * {
+    flex: 1 1 100%;
+  }
+}
